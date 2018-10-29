@@ -19,9 +19,9 @@ export class HomePage {
   annoActual:any;
   fechaActual:any;
   
-  eventList:any;
-  selectedEvent:any;
-  isSelected:any;
+  listaEvento:any;
+  seleccionarEvento:any;
+  estaSeleccionado:any;
 
   constructor(public navCtrl: NavController, private alertCtrl: AlertController, private calendar:Calendar) {
 
@@ -31,7 +31,7 @@ export class HomePage {
     this.fecha=new Date();
     this.meses=["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
     this.getMesDias();
-    //this.loadEventThisMonth();
+    this.cargarEventoEsteMes();
   }
 
   getMesDias(){
@@ -86,14 +86,14 @@ export class HomePage {
     this.navCtrl.push(AddEventPage);
   }
 
-  loadEventThisMonth(){
-    this.eventList=new Array();
-    var startDate =new Date(this.fecha.getFullYear(),this.fecha.getMonth(),1);
-    var endDate =new Date(this.fecha.getFullYear(),this.fecha.getMonth()+1,0);
-    this.calendar.listEventsInRange(startDate,endDate).then(
+  cargarEventoEsteMes(){
+    this.listaEvento=new Array();
+    var fechaInicio =new Date(this.fecha.getFullYear(),this.fecha.getMonth(),1);
+    var fechaFin =new Date(this.fecha.getFullYear(),this.fecha.getMonth()+1,0);
+    this.calendar.listEventsInRange(fechaInicio,fechaFin).then(
       (msg)=>{
         msg.forEach(item =>{
-          this.eventList.push(item);
+          this.listaEvento.push(item);
         });
       },
       (err)=>{
@@ -102,16 +102,61 @@ export class HomePage {
     );
   }
 
-  checkEvent(day){
+  marcarEvento(dia){
     var hasEvent=false;
-    var thisDate1=this.fecha.getFullYear()+"-"+(this.fecha.getMonth()+1)+"-"+day+" 00:00:00";
-    var thisDate2=this.fecha.getFullYear()+"-"+(this.fecha.getMonth()+1)+"-"+day+" 23:59:59";
-    this.eventList.forEach(event =>{
-      if(((event.startDate >= thisDate1)&&(event.startDate <= thisDate2))||((event.endDate >=thisDate1)&&(event.endDate<=thisDate2))){
-        this.isSelected=true;
-        this.selectedEvent.push(event);
+    var fecha1=this.fecha.getFullYear()+"-"+(this.fecha.getMonth()+1)+"-"+dia+" 00:00:00";
+    var fecha2=this.fecha.getFullYear()+"-"+(this.fecha.getMonth()+1)+"-"+dia+" 23:59:59";
+    this.listaEvento.forEach(event =>{
+      if(((event.fechaInicio >= fecha1)&&(event.fechaInicio <= fecha2))||((event.fechaFin >=fecha1)&&(event.fechaFin<=fecha2))){
+        this.estaSeleccionado=true;
+        this.seleccionarEvento.push(event);
       }
     });
+  }
+
+  seleccionarFecha(dia){
+    this.estaSeleccionado=false;
+    this.seleccionarEvento=new Array();
+    var fecha1=this.fecha.getFullYear()+"-"+(this.fecha.getMonth()+1)+"-"+dia+" 00:00:00";
+    var fecha2=this.fecha.getFullYear()+"-"+(this.fecha.getMonth()+1)+"-"+dia+" 23:59:59";
+    this.listaEvento.forEach(event=>{
+      if(((event.fechaInicio >= fecha1)&&(event.fechaInicio <= fecha2))||((event.fechaFin >= fecha1)&&(event.fechaFin <= fecha2))){
+        this.estaSeleccionado=true;
+        this.seleccionarEvento.push(event);
+      }
+    });
+  }
+
+  borrarEvento(evt){
+    let alert=this.alertCtrl.create({
+      title: 'Confirmar Borrado',
+      message: '¿Seguro que quiere borrar este evento?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancelar',
+          handler:()=>{
+            console.log('Cancelar pulsado');
+          }
+        },
+        {
+          text: 'Ok',
+          handler: ()=>{
+            this.calendar.deleteEvent(evt.titulo,evt.localizacion,evt.mensaje,new Date(evt.fechaIncio.replace(/\s/,'T')),new Date(evt.fechaFin.replace(/\s/,'T'))).then(
+              (msg)=>{
+                console.log(msg);
+                this.cargarEventoEsteMes();
+                this.seleccionarFecha(new Date(evt.fechaIncio.replace(/\s/,'T')).getDate());
+              },
+              (err)=>{
+                console.log(err);
+              }
+            )
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 
 }

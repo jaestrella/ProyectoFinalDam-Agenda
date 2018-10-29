@@ -1,25 +1,30 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Add Event</ion-title>
+  </ion-navbar>
+</ion-header>
 <ion-content padding>
   <form (ngSubmit)="save()">
     <ion-list>
       <ion-item>
-        <ion-label floating>Title</ion-label>
-        <ion-input type="text" [(ngModel)]="event.title" name="event.title"></ion-input>
+        <ion-label floating>Titulo</ion-label>
+        <ion-input type="text" [(ngModel)]="event.titulo" name="event.titulo"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label floating>Location</ion-label>
-        <ion-input type="text" [(ngModel)]="event.location" name="event.location"></ion-input>
+        <ion-label floating>Localizacion</ion-label>
+        <ion-input type="text" [(ngModel)]="event.localizacion" name="event.localizacion"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label floating>Notes</ion-label>
-        <ion-input type="text" [(ngModel)]="event.message" name="event.message"></ion-input>
+        <ion-label floating>Mensaje</ion-label>
+        <ion-input type="text" [(ngModel)]="event.mensaje" name="event.mensaje"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label floating>Start Date</ion-label>
-        <ion-datetime displayFormat="DD MMM YYYY" pickerFormat="DD/MM/YYYY" [(ngModel)]="event.startDate" name="event.startDate"></ion-datetime>
+        <ion-label floating>Fecha Inicio</ion-label>
+        <ion-datetime displayFormat="DD MMM YYYY" pickerFormat="DD/MM/YYYY" [(ngModel)]="event.fechaInicio" name="event.fechaInicio"></ion-datetime>
       </ion-item>
       <ion-item>
-        <ion-label floating>End Date</ion-label>
-        <ion-datetime displayFormat="DD MMM YYYY" pickerFormat="DD/MM/YYYY" [(ngModel)]="event.endDate" name="event.endDate"></ion-datetime>
+        <ion-label floating>Fecha Fin</ion-label>
+        <ion-datetime displayFormat="DD MMM YYYY" pickerFormat="DD/MM/YYYY" [(ngModel)]="event.fechaFin" name="event.fechaFin"></ion-datetime>
       </ion-item>
       <ion-item>
         <button ion-button type="submit" full round>Save</button>
