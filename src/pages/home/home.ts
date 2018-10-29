@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { NavController, AlertController } from 'ionic-angular';
 import { Calendar } from '@ionic-native/calendar';
 import { AddEventPage } from '../add-event/add-event';
-import { NgAnalyzeModulesHost } from '@angular/compiler';
 
 @Component({
   selector: 'page-home',
@@ -46,27 +45,27 @@ export class HomePage {
       this.fechaActual=999;
     }
 
-    var primerDiaEsteMes=new Date(this.fecha.getFullYear(),this.fecha.getMonth(),0).getDay();
-    var previoNumeroDias=new Date(this.fecha.getFullYear(),this.fecha.getMonth(),0).getDate();
-    for(var i=previoNumeroDias-(primerDiaEsteMes-1);i<=previoNumeroDias;i++){
+    let primerDiaEsteMes=new Date(this.fecha.getFullYear(),this.fecha.getMonth(),0).getDay();
+    let previoNumeroDias=new Date(this.fecha.getFullYear(),this.fecha.getMonth(),0).getDate();
+    for(let i=previoNumeroDias-(primerDiaEsteMes-1);i<=previoNumeroDias;i++){
       this.diasEnPasadoMes.push(i);
     }
 
-    var esteNumeroDias=new Date(this.fecha.getFullYear(),this.fecha.getMonth()+1,0).getDate();
-    for(var i=0;i<esteNumeroDias;i++){
+    let esteNumeroDias=new Date(this.fecha.getFullYear(),this.fecha.getMonth()+1,0).getDate();
+    for(let i=0;i<esteNumeroDias;i++){
       this.diasEnEsteMes.push(i+1);
     }
 
-    var ultimoDiaEsteMes=new Date(this.fecha.getFullYear(),this.fecha.getMonth()+1,0).getDay();
-    var siguenteNumeroDias=new Date(this.fecha.getFullYear(),this.fecha.getMonth()+2,0).getDate();
-    for(var i=0;i<(6-ultimoDiaEsteMes);i++){
+    let ultimoDiaEsteMes=new Date(this.fecha.getFullYear(),this.fecha.getMonth()+1,0).getDay();
+    let siguenteNumeroDias=new Date(this.fecha.getFullYear(),this.fecha.getMonth()+2,0).getDate();
+    for(let i=0;i<(6-ultimoDiaEsteMes);i++){
       this.diasEnSiguienteMes.push(i+1);
     }
 
-    var diasTotales=this.diasEnPasadoMes.length+this.diasEnEsteMes.length+this.diasEnSiguienteMes.length;
+    let diasTotales=this.diasEnPasadoMes.length+this.diasEnEsteMes.length+this.diasEnSiguienteMes.length;
 
     if(diasTotales<36){
-      for(var i=(7-ultimoDiaEsteMes);i<((7-ultimoDiaEsteMes)+7);i++){
+      for(let i=(7-ultimoDiaEsteMes);i<((7-ultimoDiaEsteMes)+7);i++){
         this.diasEnSiguienteMes.push(i);
       }
     }
@@ -88,8 +87,8 @@ export class HomePage {
 
   cargarEventoEsteMes(){
     this.listaEvento=new Array();
-    var fechaInicio =new Date(this.fecha.getFullYear(),this.fecha.getMonth(),1);
-    var fechaFin =new Date(this.fecha.getFullYear(),this.fecha.getMonth()+1,0);
+    let fechaInicio =new Date(this.fecha.getFullYear(),this.fecha.getMonth(),1);
+    let fechaFin =new Date(this.fecha.getFullYear(),this.fecha.getMonth()+1,0);
     this.calendar.listEventsInRange(fechaInicio,fechaFin).then(
       (msg)=>{
         msg.forEach(item =>{
@@ -103,9 +102,9 @@ export class HomePage {
   }
 
   marcarEvento(dia){
-    var hasEvent=false;
-    var fecha1=this.fecha.getFullYear()+"-"+(this.fecha.getMonth()+1)+"-"+dia+" 00:00:00";
-    var fecha2=this.fecha.getFullYear()+"-"+(this.fecha.getMonth()+1)+"-"+dia+" 23:59:59";
+    let hasEvent=false;
+    let fecha1=this.fecha.getFullYear()+"-"+(this.fecha.getMonth()+1)+"-"+dia+" 00:00:00";
+    let fecha2=this.fecha.getFullYear()+"-"+(this.fecha.getMonth()+1)+"-"+dia+" 23:59:59";
     this.listaEvento.forEach(event =>{
       if(((event.fechaInicio >= fecha1)&&(event.fechaInicio <= fecha2))||((event.fechaFin >=fecha1)&&(event.fechaFin<=fecha2))){
         this.estaSeleccionado=true;
@@ -117,8 +116,8 @@ export class HomePage {
   seleccionarFecha(dia){
     this.estaSeleccionado=false;
     this.seleccionarEvento=new Array();
-    var fecha1=this.fecha.getFullYear()+"-"+(this.fecha.getMonth()+1)+"-"+dia+" 00:00:00";
-    var fecha2=this.fecha.getFullYear()+"-"+(this.fecha.getMonth()+1)+"-"+dia+" 23:59:59";
+    let fecha1=this.fecha.getFullYear()+"-"+(this.fecha.getMonth()+1)+"-"+dia+" 00:00:00";
+    let fecha2=this.fecha.getFullYear()+"-"+(this.fecha.getMonth()+1)+"-"+dia+" 23:59:59";
     this.listaEvento.forEach(event=>{
       if(((event.fechaInicio >= fecha1)&&(event.fechaInicio <= fecha2))||((event.fechaFin >= fecha1)&&(event.fechaFin <= fecha2))){
         this.estaSeleccionado=true;
