@@ -24,7 +24,7 @@ export class AddEventPage {
     console.log('ionViewDidLoad AddEventPage');
   }
 
-  save(){
+  guardar(){
     this.calendar.createEvent(this.event.titulo,this.event.localizacion,this.event.mensaje,new Date(this.event.fechaInicio),new Date(this.event.fechaFin)).then(
       (msg) =>{
         let alert=this.alertCtrl.create({

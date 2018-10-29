@@ -4,7 +4,7 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding>
-  <form (ngSubmit)="save()">
+  <form (ngSubmit)="guardar()">
     <ion-list>
       <ion-item>
         <ion-label floating>Titulo</ion-label>
@@ -27,7 +27,7 @@
         <ion-datetime displayFormat="DD MMM YYYY" pickerFormat="DD/MM/YYYY" [(ngModel)]="event.fechaFin" name="event.fechaFin"></ion-datetime>
       </ion-item>
       <ion-item>
-        <button ion-button type="submit" full round>Save</button>
+        <button ion-button type="submit" full round>Guardar</button>
       </ion-item>
     </ion-list>
   </form>
