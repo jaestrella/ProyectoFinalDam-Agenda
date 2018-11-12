@@ -1,13 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
-import { Calendar } from '@ionic-native/calendar';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
+
 import { AddEventPage } from '../pages/add-event/add-event';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -16,6 +15,9 @@ import { LoginPage } from '../pages/login/login';
 import { ResetPasswordPage } from '../pages/reset-password/reset-password';
 import { SignupPage } from '../pages/signup/signup';
 import { ProfilePage } from '../pages/profile/profile';
+import { FullCalendarModule } from 'ng-fullcalendar';
+import { EventService } from '../providers/eventService';
+
 
 
 export const firebaseConfig = {
@@ -31,7 +33,6 @@ export const firebaseConfig = {
   declarations: [
     MyApp,
     HomePage,
-    ListPage,
     AddEventPage,
     LoginPage,
     ResetPasswordPage,
@@ -39,6 +40,7 @@ export const firebaseConfig = {
     ProfilePage
   ],
   imports: [
+    FullCalendarModule,
     BrowserModule,
     IonicModule.forRoot(MyApp,{},{
       links:[
@@ -54,7 +56,6 @@ export const firebaseConfig = {
   entryComponents: [
     MyApp,
     HomePage,
-    ListPage,
     AddEventPage,
     LoginPage,
     ResetPasswordPage,
@@ -62,10 +63,11 @@ export const firebaseConfig = {
     ProfilePage
   ],
   providers: [
+    EventService,
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    Calendar
+    
   ]
 })
 export class AppModule {}

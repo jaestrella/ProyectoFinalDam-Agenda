@@ -1,59 +1,17 @@
 <ion-header>
   <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Home</ion-title>
-    <ion-buttons end>
-      <button ion-button icon-only (click)="addEvent()">
-        <ion-icon name="add-circle"></ion-icon>
-      </button>
-    </ion-buttons>
+    <ion-title>
+      Agenda
+    </ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <div class="calendar-header">
-    <ion-row class="calendarioMes">
-      <ion-col col-2 (click)="irMesAnterior()"><ion-icon name="arrow-back"></ion-icon></ion-col>
-      <ion-col col-8>{{mesActual}} {{annoActual}}</ion-col>
-      <ion-col col-2 (click)="irMesSiguiente()"><ion-icon name="arrow-forward"></ion-icon></ion-col>
-    </ion-row>
-  </div>
-  <div class="calendar-body">
-    <ion-grid>
-      <ion-row class="calendarioDiaSemana">
-        <ion-col>L</ion-col>
-        <ion-col>M</ion-col>
-        <ion-col>X</ion-col>
-        <ion-col>J</ion-col>
-        <ion-col>V</ion-col>
-        <ion-col>S</ion-col>
-        <ion-col>D</ion-col>
-      </ion-row>
-      <ion-row class="calendarioFecha">
-        <ion-col col-1 *ngFor="let ultimoDia of diasEnPasadoMes" class="ultimoMes">{{ultimoDia}}</ion-col>
-        <ion-col col-1 *ngFor="let dia of diasEnEsteMes">
-          <span class="fechaActual" *ngIf="fechaActual === dia; else otraFecha">{{dia}}</span>
-          <ng-template #otraFecha class="otraFecha">{{dia}}</ng-template>
-        </ion-col>
-        <ion-col col-1 *ngFor="let siguienteDia of diasEnSiguienteMes" class="siguienteMes">{{siguienteDia}}</ion-col>
-      </ion-row>
-    </ion-grid>
-  </div>
-  <div class="selected-event" *ngIf="estaSeleccionado">
-    <ion-list>
-      <ion-item *ngFor="let se of seleccionarEvento">
-        <ion-buttons end>
-          <button ion-button clear icon-only (click)="borrarEvento(se)">
-            <ion-icon name="close"></ion-icon>
-          </button>
-        </ion-buttons>
-        <h2>{{se.titulo}}</h2>
-        <h3>{{se.mensaje}}</h3>
-        <p>Fecha Inicio: {{se.fechaInicio}}<br>
-        Fecha Fin: {{se.fechaFin}} </p>
-      </ion-item>
-    </ion-list>
+<ion-content>
+  <button ion-button (click)="loadEvents()">Cargar Eventos</button>
+  <p>Información: {{displayEvent | json}}</p>
+  <div *ngIf="calendarOptions">
+    <ng-fullcalendar #ucCalendar [options]="calendarOptions" (eventClick)="eventClick($event.detail)"
+    (eventDrop)="updateEvent($event.detail)" (eventResize)="updateEvent($event.detail)" (dayClick)="dayClick($event.detail)"
+    (clickButton)="clickButton($event.detail)" [(eventsModel)]="events"></ng-fullcalendar>
   </div>
 </ion-content>
