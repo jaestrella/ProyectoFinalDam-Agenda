@@ -7,7 +7,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 
-import { AddEventPage } from '../pages/add-event/add-event';
+
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -16,7 +16,9 @@ import { ResetPasswordPage } from '../pages/reset-password/reset-password';
 import { SignupPage } from '../pages/signup/signup';
 import { ProfilePage } from '../pages/profile/profile';
 import { FullCalendarModule } from 'ng-fullcalendar';
-import { EventService } from '../providers/eventService';
+import { EventService } from '../servicios/eventService';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+
 
 
 
@@ -33,7 +35,6 @@ export const firebaseConfig = {
   declarations: [
     MyApp,
     HomePage,
-    AddEventPage,
     LoginPage,
     ResetPasswordPage,
     SignupPage,
@@ -49,6 +50,7 @@ export const firebaseConfig = {
         {component:SignupPage,name:'SignupPage',segment:'Signup'},
       ]
     }),
+    AngularFireDatabaseModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule
   ],
@@ -56,7 +58,6 @@ export const firebaseConfig = {
   entryComponents: [
     MyApp,
     HomePage,
-    AddEventPage,
     LoginPage,
     ResetPasswordPage,
     SignupPage,

@@ -1,18 +1,33 @@
 import { Component, ViewChild } from '@angular/core';
 import { CalendarComponent } from 'ng-fullcalendar';
 import { Options } from 'fullcalendar';
-import { EventService} from '../../providers/eventService';
+import { EventService} from '../../servicios/eventService';
+import { AlertController, NavController } from 'ionic-angular';
+import { Evento } from '../../modelo/evento';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
+
+  eventos: Observable<Evento[]>;
+  title:string;
+  start:string;
+  end:string;
+
   calendarOptions:Options;
   displayEvent:any;
+  date: any;
+  eventList: any;
+  selectedEvent: any;
+  isSelected: any;
   events=null;
   @ViewChild(CalendarComponent) ucCalendar:CalendarComponent;
-  constructor(protected eventService:EventService){}
+  constructor(protected eventService:EventService,public navCtrl: NavController){
+    this.eventos = this.eventService.getEvents();
+  }
   ionViewDidLoad(){
     this.calendarOptions={
       editable:true,
@@ -22,7 +37,8 @@ export class HomePage {
         center:'title',
         right:'month,agendaWeek,agendaDay,listMonth'
       },
-      events:[]
+      events:[],
+      
     };
   }
 
@@ -43,11 +59,9 @@ export class HomePage {
   eventClick(model:any){
     model={
       event:{
-        id:model.event.id,
         start:model.event.start,
         end:model.event.end,
-        title:model.event.title,
-        allDay:model.event.allDay
+        title:model.event.title
       },
       duration:{}
     }
@@ -57,7 +71,6 @@ export class HomePage {
   updateEvent(model:any){
     model={
       event:{
-        id:model.event.id,
         start:model.event.start,
         end:model.event.end,
         title:model.event.title,
@@ -68,8 +81,9 @@ export class HomePage {
     }
     this.displayEvent=model;
   }
+
+  nuevoEvento(){
+    this.eventService.insertarEvento({title: this.title, start: this.start, end: this.end});
+  }
+  
 }
-  
-  
-
-

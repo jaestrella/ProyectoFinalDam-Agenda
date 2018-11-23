@@ -14,4 +14,26 @@
     (eventDrop)="updateEvent($event.detail)" (eventResize)="updateEvent($event.detail)" (dayClick)="dayClick($event.detail)"
     (clickButton)="clickButton($event.detail)" [(eventsModel)]="events"></ng-fullcalendar>
   </div>
+
+  <ion-list>
+    <ion-item>
+      <ion-label color="primary" >Actividad:</ion-label>
+      <ion-input placeholder="" [(ngModel)]="title"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary"  >Fecha inicio:</ion-label>
+      <ion-input placeholder="" [(ngModel)]="start" ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary" >Fecha fin:</ion-label>
+      <ion-input placeholder="" [(ngModel)]="end" ></ion-input>
+    </ion-item>
+  </ion-list>
+  <button ion-button color="danger" (click)="nuevoEvento()" (click)="showToast('bottom')">Añadir Evento</button>
+
+  <ion-item *ngFor="let evento of eventos | async">
+      <p>Actividad: {{evento.title}}</p>
+      <p>Fecha inicio: {{evento.start}}</p>
+      <p>Fecha fin: {{evento.end}}</p>
+  </ion-item>
 </ion-content>
