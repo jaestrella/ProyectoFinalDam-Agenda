@@ -1,16 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { AngularFireDatabase } from 'angularfire2/database';
-import { AngularFireList } from 'angularfire2/database';
 import 'rxjs/add/observable/of';
-import { Evento } from '../modelo/evento';
+
 @Injectable()
 export class EventService{
-    private eventosRef:AngularFireList<any>;
-    constructor(private db: AngularFireDatabase) {
-        this.eventosRef = this.db.list<Evento>('/agenda');
-    }
-    public getEvents():Observable<Evento[]>{
+    
+    public getEvents():Observable<any>{
         let data:any=[
         {
             title:'partido',
@@ -20,12 +15,5 @@ export class EventService{
           return Observable.of(data);
     }
 
-    insertarEvento(evento:Evento) {
-        this.eventosRef.push(evento);
-    }
-    
-    eliminarEvento(evento:Evento) {
-        this.eventosRef.remove(evento.key);
-    }
     
 }
